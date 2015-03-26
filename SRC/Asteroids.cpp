@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <functional>
+
 #include "Asteroid.h"
 #include "Asteroids.h"
 #include "Animation.h"
@@ -212,10 +215,19 @@ void Asteroids::OnTimer(int value)
 
 	if (value == SHOW_GAME_OVER)
 	{
-		mGameOverLabel->SetVisible(true);
+		AddSessionScore(mScoreKeeper.GetScore());
+		std::sort(session_scores.begin(), session_scores.end(), std::greater<int>());
 		// Format the final score message using an string-based stream
 		std::ostringstream msg_stream;
-		msg_stream << "Final Score: " << mScoreKeeper.GetScore();
+		msg_stream << "Scores: ";
+
+		// Loop through session scores to display
+		for (std::vector<int>::const_iterator i = session_scores.begin(); i != session_scores.end(); ++i)
+		{
+			msg_stream << *i << ' ';
+		}
+		mGameOverLabel->SetVisible(true);
+		
 		// Get the final score message as a string
 		std::string score_msg = msg_stream.str();
 		mFinalScoreLabel->SetText(score_msg);
@@ -268,6 +280,7 @@ void Asteroids::CreateGUI()
 {
 	// Add a (transparent) border around the edge of the game display
 	mGameDisplay->GetContainer()->SetBorder(GLVector2i(10, 10));
+
 	// Create a new GUILabel and wrap it up in a shared_ptr
 	mScoreLabel = make_shared<GUILabel>("Score: 0");
 	// Set the vertical alignment of the label to GUI_VALIGN_TOP
@@ -318,15 +331,15 @@ void Asteroids::CreateGUI()
 	// Create a new GUILabel and wrap it up in a shared_ptr
 	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Final Score: "));
 	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
-	mFinalScoreLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
+	mStartLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
 	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
-	mFinalScoreLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_MIDDLE);
+	mFinalScoreLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
 	// Set the visibility of the label to false (hidden)
 	mFinalScoreLabel->SetVisible(false);
 	// Add the GUILabel to the GUIContainer  
 	shared_ptr<GUIComponent> final_score_component
 		= static_pointer_cast<GUIComponent>(mFinalScoreLabel);
-	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.5f, 0.5f));
+	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.3f, 0.45f));
 }
 
 void Asteroids::OnScoreChanged(int score)
@@ -361,6 +374,11 @@ void Asteroids::OnPlayerKilled(int lives_left)
 	{
 		SetTimer(500, SHOW_GAME_OVER);
 	}
+}
+
+void Asteroids::AddSessionScore(int score)
+{
+	session_scores.push_back(score);
 }
 
 shared_ptr<GameObject> Asteroids::CreateExplosion()

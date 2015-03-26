@@ -1,5 +1,5 @@
-﻿Build started 26/03/2015 11:01:52.
-     1>Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Engine\Engine.vcxproj" on node 2 (Build target(s)).
+﻿Build started 26/03/2015 13:01:52.
+     1>Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Engine\Engine.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Src\Animation.cpp ..\..\Src\AnimationManager.cpp ..\..\src\GameDisplay.cpp ..\..\src\GameObject.cpp ..\..\Src\GameObjectType.cpp ..\..\src\GameSession.cpp ..\..\src\GameWindow.cpp ..\..\src\GameWorld.cpp ..\..\src\GlutSession.cpp ..\..\src\GlutWindow.cpp ..\..\src\GLVector.cpp ..\..\src\GUIComponent.cpp ..\..\src\GUIContainer.cpp ..\..\src\GUIIcon.cpp ..\..\src\GUILabel.cpp ..\..\src\Image.cpp ..\..\src\ImageManager.cpp ..\..\src\MovementController.cpp ..\..\Src\Shape.cpp ..\..\src\Sprite.cpp ..\..\src\Texture.cpp ..\..\src\TextureManager.cpp
          TextureManager.cpp
@@ -51,8 +51,8 @@
          Debug\Texture.obj
          Debug\TextureManager.obj
          Engine.vcxproj -> D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\Debug\..\..\..\lib\Engine.lib
-     1>Done Building Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Engine\Engine.vcxproj" (Build target(s)).
+     1>Done Building Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Engine\Engine.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.15
+Time Elapsed 00:00:05.90

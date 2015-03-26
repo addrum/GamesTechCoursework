@@ -47,6 +47,8 @@ public:
 	// Override the default implementation of ITimerListener ////////////////////
 	void OnTimer(int value);
 
+	void AddSessionScore(int score);
+
 private:
 	shared_ptr<Spaceship> mSpaceship;
 	shared_ptr<GUILabel> mScoreLabel;
@@ -60,6 +62,8 @@ private:
 
 	bool started = false;
 	bool game_over = false;
+
+	vector<int> session_scores;
 
 	void ResetSpaceship();
 	shared_ptr<GameObject> CreateSpaceship();

@@ -1,6 +1,7 @@
 #ifndef __SCOREKEEPER_H__
 #define __SCOREKEEPER_H__
 
+#include <vector>
 #include "GameUtil.h"
 
 #include "GameObject.h"
