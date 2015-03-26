@@ -1,14 +1,8 @@
-﻿Build started 26/03/2015 11:01:58.
+﻿Build started 26/03/2015 11:33:36.
      1>Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\Asteroids.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\SRC\Asteroid.cpp ..\..\src\Asteroids.cpp ..\..\src\Bullet.cpp ..\..\SRC\Explosion.cpp ..\..\src\main.cpp ..\..\src\Spaceship.cpp
-         Spaceship.cpp
-         main.cpp
-         Explosion.cpp
-         Bullet.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\Asteroids.cpp
          Asteroids.cpp
-         Asteroid.cpp
-         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\bin\Asteroids.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../lib /LIBPATH:"../Game Engine/Debug" opengl32.lib glu32.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Debug\Asteroids.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"..\..\bin\Asteroids.lib" /MACHINE:X86 /SAFESEH Debug\Asteroid.obj
          Debug\Asteroids.obj
@@ -34,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.66
+Time Elapsed 00:00:00.96
