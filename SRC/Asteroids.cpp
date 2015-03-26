@@ -85,7 +85,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 	switch (key)
 	{
 	case ' ':
-		if (!started) {
+		if (!started && !game_over) {
 			// Hide press space label
 			mStartLabel->SetVisible(false);
 			// Show score label
@@ -102,6 +102,33 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mSpaceship->Shoot();
 		}
 		break;
+	case 'r':
+		if (game_over) {
+			// Hide game over label
+			mGameOverLabel->SetVisible(false);
+			// Hide final score label
+			mFinalScoreLabel->SetVisible(false);
+			// Reset score
+			mScoreKeeper.ResetScore();
+			// Reset score label
+			mScoreKeeper.FireScoreChanged();
+			// Reset lives
+			mPlayer.ResetLives();
+			// Reset lives label
+			mPlayer.FirePlayerKilled();
+			// Reset levels
+			mLevel = 0;
+			// Reset asteroids
+			mAsteroidCount = 0;
+			// Set boolean to started so we know the user has ok'd the start
+			started = true;
+			// Set boolean to false so we know the users has restarted
+			game_over = false;
+			// Create a spaceship and add it to the world
+			mGameWorld->AddObject(CreateSpaceship());
+			// Create some asteroids and add them to the world
+			CreateAsteroids(10);
+		}
 	default:
 		break;
 	}
@@ -193,6 +220,8 @@ void Asteroids::OnTimer(int value)
 		std::string score_msg = msg_stream.str();
 		mFinalScoreLabel->SetText(score_msg);
 		mFinalScoreLabel->SetVisible(true);
+		started = false;
+		game_over = true;
 	}
 
 }

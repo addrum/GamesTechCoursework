@@ -40,6 +40,11 @@ public:
 		}
 	}
 
+	void ResetLives()
+	{
+		mLives = 3;
+	}
+
 private:
 	int mLives;
 

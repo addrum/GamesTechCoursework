@@ -59,6 +59,7 @@ private:
 	uint mAsteroidCount;
 
 	bool started = false;
+	bool game_over = false;
 
 	void ResetSpaceship();
 	shared_ptr<GameObject> CreateSpaceship();

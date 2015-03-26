@@ -38,6 +38,11 @@ public:
 		}
 	}
 
+	void ResetScore()
+	{
+		mScore = 0;
+	}
+
 	int GetScore() 
 	{
 		return mScore;
