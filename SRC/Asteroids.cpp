@@ -186,6 +186,13 @@ void Asteroids::OnTimer(int value)
 	if (value == SHOW_GAME_OVER)
 	{
 		mGameOverLabel->SetVisible(true);
+		// Format the final score message using an string-based stream
+		std::ostringstream msg_stream;
+		msg_stream << "Final Score: " << mScoreKeeper.GetScore();
+		// Get the final score message as a string
+		std::string score_msg = msg_stream.str();
+		mFinalScoreLabel->SetText(score_msg);
+		mFinalScoreLabel->SetVisible(true);
 	}
 
 }
@@ -278,6 +285,19 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> start_component
 		= static_pointer_cast<GUIComponent>(mStartLabel);
 	mGameDisplay->GetContainer()->AddComponent(start_component, GLVector2f(0.5f, 0.5f));
+
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Final Score: "));
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mFinalScoreLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
+	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
+	mFinalScoreLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_MIDDLE);
+	// Set the visibility of the label to false (hidden)
+	mFinalScoreLabel->SetVisible(false);
+	// Add the GUILabel to the GUIContainer  
+	shared_ptr<GUIComponent> final_score_component
+		= static_pointer_cast<GUIComponent>(mFinalScoreLabel);
+	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.5f, 0.5f));
 }
 
 void Asteroids::OnScoreChanged(int score)
