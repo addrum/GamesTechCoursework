@@ -229,9 +229,18 @@ void Asteroids::OnTimer(int value)
 		msg_stream << "Top Scores: ";
 
 		// Loop through session scores to display
+		int limit = 0;
 		for (std::vector<int>::const_iterator i = high_scores.begin(); i != high_scores.end(); ++i)
 		{
-			msg_stream << *i << ' ';
+			if (limit < 10)
+			{
+				msg_stream << *i << ' ';
+				++limit;
+			}
+			else
+			{
+				break;
+			}
 		}
 		mGameOverLabel->SetVisible(true);
 		
