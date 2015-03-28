@@ -224,13 +224,10 @@ void Asteroids::OnTimer(int value)
 		//AddSessionScore(mScoreKeeper.GetScore());
 		// Sort it in descending order
 		std::sort(high_scores.begin(), high_scores.end(), std::greater<int>());
-		// Format the final score message using an string-based stream
-		std::ostringstream msg_stream;
-		msg_stream << "Top Scores: ";
 
 		// Loop through session scores to display
 		int limit = 0;
-		for (std::vector<int>::const_iterator i = high_scores.begin(); i != high_scores.end(); ++i)
+		/*for (std::vector<int>::const_iterator i = high_scores.begin(); i != high_scores.end(); ++i)
 		{
 			if (limit < 10)
 			{
@@ -241,12 +238,23 @@ void Asteroids::OnTimer(int value)
 			{
 				break;
 			}
+		}*/
+		while (limit < 10)
+		{
+			ostringstream convert;
+			convert << high_scores[limit];
+			string score = convert.str();
+			// Create a new GUILabel and wrap it up in a shared_ptr
+			shared_ptr<GUILabel> mTopScoreLabel = shared_ptr<GUILabel>(new GUILabel(convert.str()));
+
+			// Add the GUILabel to the GUIContainer  
+			shared_ptr<GUIComponent> top_score_component
+				= static_pointer_cast<GUIComponent>(mTopScoreLabel);
+			mGameDisplay->GetContainer()->AddComponent(top_score_component, GLVector2f(0.475f, 0.8f - (limit * 0.05f)));
+			
+			limit++;
 		}
 		mGameOverLabel->SetVisible(true);
-		
-		// Get the final score message as a string
-		std::string score_msg = msg_stream.str();
-		mFinalScoreLabel->SetText(score_msg);
 		mFinalScoreLabel->SetVisible(true);
 		started = false;
 		game_over = true;
@@ -322,14 +330,14 @@ void Asteroids::CreateGUI()
 	mGameOverLabel = shared_ptr<GUILabel>(new GUILabel("GAME OVER"));
 	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
 	mGameOverLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
-	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
-	mGameOverLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_MIDDLE);
+	// Set the vertical alignment of the label to GUI_VALIGN_TOP
+	mGameOverLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
 	// Set the visibility of the label to false (hidden)
 	mGameOverLabel->SetVisible(false);
 	// Add the GUILabel to the GUIContainer  
 	shared_ptr<GUIComponent> game_over_component
 		= static_pointer_cast<GUIComponent>(mGameOverLabel);
-	mGameDisplay->GetContainer()->AddComponent(game_over_component, GLVector2f(0.5f, 0.5f));
+	mGameDisplay->GetContainer()->AddComponent(game_over_component, GLVector2f(0.5f, 1.0f));
 
 	// Create a new GUILabel and wrap it up in a shared_ptr
 	mStartLabel = shared_ptr<GUILabel>(new GUILabel("PRESS SPACE TO START"));
@@ -345,9 +353,9 @@ void Asteroids::CreateGUI()
 	mGameDisplay->GetContainer()->AddComponent(start_component, GLVector2f(0.5f, 0.5f));
 
 	// Create a new GUILabel and wrap it up in a shared_ptr
-	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Top Scores: "));
+	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Top Scores:"));
 	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
-	mStartLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
+	mFinalScoreLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
 	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
 	mFinalScoreLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
 	// Set the visibility of the label to false (hidden)
@@ -355,7 +363,7 @@ void Asteroids::CreateGUI()
 	// Add the GUILabel to the GUIContainer  
 	shared_ptr<GUIComponent> final_score_component
 		= static_pointer_cast<GUIComponent>(mFinalScoreLabel);
-	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.3f, 0.45f));
+	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.5f, 0.9f));
 }
 
 void Asteroids::OnScoreChanged(int score)
