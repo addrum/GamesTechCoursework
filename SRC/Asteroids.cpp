@@ -239,6 +239,7 @@ void Asteroids::OnTimer(int value)
 				break;
 			}
 		}*/
+		// Create a new GUILabel for the 10 highest scores
 		while (limit < 10)
 		{
 			ostringstream convert;
@@ -256,6 +257,7 @@ void Asteroids::OnTimer(int value)
 		}
 		mGameOverLabel->SetVisible(true);
 		mFinalScoreLabel->SetVisible(true);
+		mRestartLabel->SetVisible(true);
 		started = false;
 		game_over = true;
 	}
@@ -364,6 +366,19 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> final_score_component
 		= static_pointer_cast<GUIComponent>(mFinalScoreLabel);
 	mGameDisplay->GetContainer()->AddComponent(final_score_component, GLVector2f(0.5f, 0.9f));
+
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mRestartLabel = shared_ptr<GUILabel>(new GUILabel("PRESS R TO RESTART"));
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mRestartLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
+	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
+	mRestartLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_BOTTOM);
+	// Set the visibility of the label to false (hidden)
+	mRestartLabel->SetVisible(false);
+	// Add the GUILabel to the GUIContainer  
+	shared_ptr<GUIComponent> restart_label_component
+		= static_pointer_cast<GUIComponent>(mRestartLabel);
+	mGameDisplay->GetContainer()->AddComponent(restart_label_component, GLVector2f(0.5f, 0.0f));
 }
 
 void Asteroids::OnScoreChanged(int score)
