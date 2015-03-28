@@ -1,5 +1,7 @@
 #include <algorithm>
 #include <functional>
+#include <iostream>
+#include <fstream>
 
 #include "Asteroid.h"
 #include "Asteroids.h"
@@ -215,14 +217,19 @@ void Asteroids::OnTimer(int value)
 
 	if (value == SHOW_GAME_OVER)
 	{
-		AddSessionScore(mScoreKeeper.GetScore());
-		std::sort(session_scores.begin(), session_scores.end(), std::greater<int>());
+		// Save the current score to the file
+		SaveScoreToFile(mScoreKeeper.GetScore());
+		vector<int> high_scores = ReadScoreFile();
+		// Add the last score to the current sessions vector
+		//AddSessionScore(mScoreKeeper.GetScore());
+		// Sort it in descending order
+		std::sort(high_scores.begin(), high_scores.end(), std::greater<int>());
 		// Format the final score message using an string-based stream
 		std::ostringstream msg_stream;
-		msg_stream << "Scores: ";
+		msg_stream << "Top Scores: ";
 
 		// Loop through session scores to display
-		for (std::vector<int>::const_iterator i = session_scores.begin(); i != session_scores.end(); ++i)
+		for (std::vector<int>::const_iterator i = high_scores.begin(); i != high_scores.end(); ++i)
 		{
 			msg_stream << *i << ' ';
 		}
@@ -329,7 +336,7 @@ void Asteroids::CreateGUI()
 	mGameDisplay->GetContainer()->AddComponent(start_component, GLVector2f(0.5f, 0.5f));
 
 	// Create a new GUILabel and wrap it up in a shared_ptr
-	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Final Score: "));
+	mFinalScoreLabel = shared_ptr<GUILabel>(new GUILabel("Top Scores: "));
 	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
 	mStartLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
 	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
@@ -376,9 +383,34 @@ void Asteroids::OnPlayerKilled(int lives_left)
 	}
 }
 
+// Add current score to sessions vector
 void Asteroids::AddSessionScore(int score)
 {
 	session_scores.push_back(score);
+}
+
+// Save's the parameter to the scores file and append's a new line
+void Asteroids::SaveScoreToFile(int score)
+{
+	ofstream score_file;
+	score_file.open("scores.txt", ios::out | ios::app);
+	score_file << score << "\n";
+	score_file.close();
+}
+
+vector<int> Asteroids::ReadScoreFile()
+{
+	string line;
+	ifstream score_file;
+	score_file.open("scores.txt");
+	vector<int> scores;
+
+	for (int score = 0; std::getline(score_file, line); score = std::stoi(line))
+	{
+		scores.push_back(score);
+	}
+	score_file.close();
+	return scores;
 }
 
 shared_ptr<GameObject> Asteroids::CreateExplosion()

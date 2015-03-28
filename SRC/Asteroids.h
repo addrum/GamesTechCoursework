@@ -49,6 +49,10 @@ public:
 
 	void AddSessionScore(int score);
 
+	void SaveScoreToFile(int score);
+
+	vector<int> ReadScoreFile();
+
 private:
 	shared_ptr<Spaceship> mSpaceship;
 	shared_ptr<GUILabel> mScoreLabel;
@@ -56,7 +60,6 @@ private:
 	shared_ptr<GUILabel> mGameOverLabel;
 	shared_ptr<GUILabel> mStartLabel;
 	shared_ptr<GUILabel> mFinalScoreLabel;
-	shared_ptr<G
 
 	uint mLevel;
 	uint mAsteroidCount;
@@ -64,6 +67,7 @@ private:
 	bool started = false;
 	bool game_over = false;
 
+	// Create a vector to store scores for a session
 	vector<int> session_scores;
 
 	void ResetSpaceship();
