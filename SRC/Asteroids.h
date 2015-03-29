@@ -61,6 +61,7 @@ private:
 	shared_ptr<GUILabel> mStartLabel;
 	shared_ptr<GUILabel> mFinalScoreLabel;
 	shared_ptr<GUILabel> mRestartLabel;
+	shared_ptr<GUILabel> mRespawnLabel;
 	// Vector of score labels
 	vector<shared_ptr<GUILabel>> mHighScoresLabel;
 
@@ -70,6 +71,7 @@ private:
 
 	bool started = false;
 	bool game_over = false;
+	bool respawn = false;
 
 	// Create a vector to store scores for a session
 	vector<int> session_scores;

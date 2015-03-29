@@ -150,6 +150,12 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			// Create some aliens and add them to the world
 			CreateAliens(1);
 		}
+		else
+		{
+			mRespawnLabel->SetVisible(false);
+			respawn = true;
+			SetTimer(0, CREATE_NEW_PLAYER);
+		}
 	default:
 		break;
 	}
@@ -207,10 +213,6 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAsteroidCount--;
-		if (mAsteroidCount <= 0 && mAlienCount <= 0) 
-		{ 
-			SetTimer(500, START_NEXT_LEVEL); 
-		}
 	}
 	if (object->GetType() == GameObjectType("Alien"))
 	{
@@ -219,6 +221,10 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAlienCount--;
+	}
+	if (mAsteroidCount <= 0 && mAlienCount <= 0)
+	{
+		SetTimer(500, START_NEXT_LEVEL);
 	}
 }
 
@@ -423,6 +429,19 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> restart_label_component
 		= static_pointer_cast<GUIComponent>(mRestartLabel);
 	mGameDisplay->GetContainer()->AddComponent(restart_label_component, GLVector2f(0.5f, 0.0f));
+
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mRespawnLabel = shared_ptr<GUILabel>(new GUILabel("PRESS R TO RESPAWN"));
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mRespawnLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_CENTER);
+	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
+	mRespawnLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_BOTTOM);
+	// Set the visibility of the label to false (hidden)
+	mRespawnLabel->SetVisible(false);
+	// Add the GUILabel to the GUIContainer  
+	shared_ptr<GUIComponent> respawn_label_component
+		= static_pointer_cast<GUIComponent>(mRespawnLabel);
+	mGameDisplay->GetContainer()->AddComponent(respawn_label_component, GLVector2f(0.5f, 0.0f));
 }
 
 void Asteroids::OnScoreChanged(int score)
@@ -451,7 +470,11 @@ void Asteroids::OnPlayerKilled(int lives_left)
 
 	if (lives_left > 0) 
 	{ 
-		SetTimer(1000, CREATE_NEW_PLAYER); 
+		mRespawnLabel->SetVisible(true);
+		if (respawn)
+		{
+			respawn = false;
+		}
 	}
 	else
 	{
