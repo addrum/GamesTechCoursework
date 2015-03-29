@@ -102,6 +102,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\SRC\Alien.cpp" />
     <ClCompile Include="..\..\SRC\Asteroid.cpp" />
     <ClCompile Include="..\..\src\Asteroids.cpp" />
     <ClCompile Include="..\..\src\Bullet.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="..\..\src\Spaceship.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\SRC\Alien.h" />
     <ClInclude Include="..\..\SRC\Asteroid.h" />
     <ClInclude Include="..\..\src\Asteroids.h" />
     <ClInclude Include="..\..\src\Bullet.h" />

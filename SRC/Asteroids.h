@@ -64,6 +64,7 @@ private:
 
 	uint mLevel;
 	uint mAsteroidCount;
+	uint mAlienCount;
 
 	bool started = false;
 	bool game_over = false;
@@ -75,6 +76,7 @@ private:
 	shared_ptr<GameObject> CreateSpaceship();
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
+	void CreateAliens(const uint num_aliens);
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;

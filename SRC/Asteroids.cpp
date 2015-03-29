@@ -16,6 +16,7 @@
 #include "BoundingSphere.h"
 #include "GUILabel.h"
 #include "Explosion.h"
+#include "Alien.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -25,6 +26,7 @@ Asteroids::Asteroids(int argc, char *argv[])
 {
 	mLevel = 0;
 	mAsteroidCount = 0;
+	mAlienCount = 0;
 }
 
 /** Destructor. */
@@ -62,6 +64,7 @@ void Asteroids::Start()
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
 	Animation *asteroid1_anim = AnimationManager::GetInstance().CreateAnimationFromFile("asteroid1", 128, 8192, 128, 128, "asteroid1_fs.png");
 	Animation *spaceship_anim = AnimationManager::GetInstance().CreateAnimationFromFile("spaceship", 128, 128, 128, 128, "spaceship_fs.png");
+	Animation *alien_anim = AnimationManager::GetInstance().CreateAnimationFromFile("alien", 128, 128, 128, 128, "alien_fs.png");
 
 	//Create the GUI
 	CreateGUI();
@@ -103,6 +106,8 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mGameWorld->AddObject(CreateSpaceship());
 			// Create some asteroids and add them to the world
 			CreateAsteroids(10);
+			// Create some aliens and add them to the world
+			CreateAliens(1);
 		} else {
 			mSpaceship->Shoot();
 		}
@@ -191,10 +196,18 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAsteroidCount--;
-		if (mAsteroidCount <= 0) 
+		if (mAsteroidCount <= 0 && mAlienCount <= 0) 
 		{ 
 			SetTimer(500, START_NEXT_LEVEL); 
 		}
+	}
+	if (object->GetType() == GameObjectType("Alien"))
+	{
+		shared_ptr<GameObject> explosion = CreateExplosion();
+		explosion->SetPosition(object->GetPosition());
+		explosion->SetRotation(object->GetRotation());
+		mGameWorld->AddObject(explosion);
+		mAlienCount--;
 	}
 }
 
@@ -212,7 +225,9 @@ void Asteroids::OnTimer(int value)
 	{
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
+		int num_aliens = 1;
 		CreateAsteroids(num_asteroids);
+		CreateAliens(num_aliens);
 	}
 
 	if (value == SHOW_GAME_OVER)
@@ -299,6 +314,23 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
+	}
+}
+
+void Asteroids::CreateAliens(const uint num_aliens)
+{
+	mAlienCount = num_aliens;
+	for (uint i = 0; i < num_aliens; i++)
+	{
+		Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("alien");
+		shared_ptr<Sprite> alien_sprite
+			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+		alien_sprite->SetLoopAnimation(true);
+		shared_ptr<GameObject> alien = make_shared<Alien>();
+		alien->SetBoundingShape(make_shared<BoundingSphere>(alien->GetThisPtr(), 10.0f));
+		alien->SetSprite(alien_sprite);
+		alien->SetScale(0.2f);
+		mGameWorld->AddObject(alien);
 	}
 }
 
