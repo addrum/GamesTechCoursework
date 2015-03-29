@@ -130,6 +130,8 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mLevel = 0;
 			// Reset asteroids
 			mAsteroidCount = 0;
+			// Reset aliens
+			mAlienCount = 0;
 			// Set boolean to started so we know the user has ok'd the start
 			started = true;
 			// Set boolean to false so we know the users has restarted
@@ -138,6 +140,8 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mGameWorld->AddObject(CreateSpaceship());
 			// Create some asteroids and add them to the world
 			CreateAsteroids(10);
+			// Create some aliens and add them to the world
+			CreateAliens(1);
 		}
 	default:
 		break;
@@ -225,7 +229,7 @@ void Asteroids::OnTimer(int value)
 	{
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
-		int num_aliens = 1;
+		int num_aliens = 1 + mLevel;
 		CreateAsteroids(num_asteroids);
 		CreateAliens(num_aliens);
 	}
@@ -240,8 +244,8 @@ void Asteroids::OnTimer(int value)
 		// Sort it in descending order
 		std::sort(high_scores.begin(), high_scores.end(), std::greater<int>());
 
-		// Loop through session scores to display
 		int limit = 0;
+		// Loop through session scores to display
 		/*for (std::vector<int>::const_iterator i = high_scores.begin(); i != high_scores.end(); ++i)
 		{
 			if (limit < 10)
