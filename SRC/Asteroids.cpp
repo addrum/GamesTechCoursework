@@ -118,6 +118,13 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mGameOverLabel->SetVisible(false);
 			// Hide final score label
 			mFinalScoreLabel->SetVisible(false);
+			// Hide restart label
+			mRestartLabel->SetVisible(false);
+			// Hide top scores label
+			for (int i = 0; i < mHighScoresLabel.size(); ++i)
+			{
+				mHighScoresLabel[i]->SetVisible(false);
+			}
 			// Reset score
 			mScoreKeeper.ResetScore();
 			// Reset score label
@@ -259,13 +266,14 @@ void Asteroids::OnTimer(int value)
 			}
 		}*/
 		// Create a new GUILabel for the 10 highest scores
-		while (limit < 10)
+		while (limit < high_scores.size() && limit < 10)
 		{
 			ostringstream convert;
 			convert << high_scores[limit];
 			string score = convert.str();
 			// Create a new GUILabel and wrap it up in a shared_ptr
 			shared_ptr<GUILabel> mTopScoreLabel = shared_ptr<GUILabel>(new GUILabel(convert.str()));
+			mHighScoresLabel.push_back(mTopScoreLabel);
 
 			// Add the GUILabel to the GUIContainer  
 			shared_ptr<GUIComponent> top_score_component

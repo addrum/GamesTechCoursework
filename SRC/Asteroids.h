@@ -61,6 +61,8 @@ private:
 	shared_ptr<GUILabel> mStartLabel;
 	shared_ptr<GUILabel> mFinalScoreLabel;
 	shared_ptr<GUILabel> mRestartLabel;
+	// Vector of score labels
+	vector<shared_ptr<GUILabel>> mHighScoresLabel;
 
 	uint mLevel;
 	uint mAsteroidCount;
