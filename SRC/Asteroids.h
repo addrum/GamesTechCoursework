@@ -62,6 +62,8 @@ private:
 	shared_ptr<GUILabel> mFinalScoreLabel;
 	shared_ptr<GUILabel> mRestartLabel;
 	shared_ptr<GUILabel> mRespawnLabel;
+	// User input label
+	shared_ptr<GUILabel> mUserInputLabel;
 	// Vector of score labels
 	vector<shared_ptr<GUILabel>> mHighScoresLabel;
 
@@ -81,6 +83,7 @@ private:
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
 	void CreateAliens(const uint num_aliens);
+	void OnInputReceived(string letter);
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;
@@ -89,6 +92,7 @@ private:
 
 	ScoreKeeper mScoreKeeper;
 	Player mPlayer;
+	string mName;
 };
 
 #endif

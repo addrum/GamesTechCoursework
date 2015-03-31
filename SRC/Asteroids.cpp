@@ -90,6 +90,12 @@ void Asteroids::Stop()
 
 void Asteroids::OnKeyPressed(uchar key, int x, int y)
 {
+	if (game_over)
+	{
+		std::ostringstream msg_stream;
+		msg_stream << key;
+		OnInputReceived(msg_stream.str());
+	}
 	switch (key)
 	{
 	case ' ':
@@ -291,6 +297,7 @@ void Asteroids::OnTimer(int value)
 		mGameOverLabel->SetVisible(true);
 		mFinalScoreLabel->SetVisible(true);
 		mRestartLabel->SetVisible(true);
+		mUserInputLabel->SetVisible(true);
 		started = false;
 		game_over = true;
 	}
@@ -442,6 +449,20 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> respawn_label_component
 		= static_pointer_cast<GUIComponent>(mRespawnLabel);
 	mGameDisplay->GetContainer()->AddComponent(respawn_label_component, GLVector2f(0.5f, 0.0f));
+
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mUserInputLabel = shared_ptr<GUILabel>(new GUILabel("Name: "));
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mUserInputLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_LEFT);
+	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
+	mUserInputLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_MIDDLE);
+	// Set the visibility of the label to false (hidden)
+	mUserInputLabel->SetVisible(false);
+	// Add the GUILabel to the GUIContainer  
+	shared_ptr<GUIComponent> user_input_label_component
+		= static_pointer_cast<GUIComponent>(mUserInputLabel);
+	mGameDisplay->GetContainer()->AddComponent(user_input_label_component, GLVector2f(0.0f, 0.5f));
+
 }
 
 void Asteroids::OnScoreChanged(int score)
@@ -452,6 +473,17 @@ void Asteroids::OnScoreChanged(int score)
 	// Get the score message as a string
 	std::string score_msg = msg_stream.str();
 	mScoreLabel->SetText(score_msg);
+}
+
+void Asteroids::OnInputReceived(string letter)
+{
+	mName.append(letter);
+	// Format the score message using an string-based stream
+	std::ostringstream msg_stream;
+	msg_stream << "Name: " << mName;
+	// Get the score message as a string
+	std::string name_msg = msg_stream.str();
+	mUserInputLabel->SetText(name_msg);
 }
 
 void Asteroids::OnPlayerKilled(int lives_left)
