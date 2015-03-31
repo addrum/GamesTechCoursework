@@ -49,9 +49,9 @@ public:
 
 	void AddSessionScore(int score);
 
-	void SaveScoreToFile(int score);
+	void SaveScoreToFile(string name, int score);
 
-	vector<int> ReadScoreFile();
+	vector<string> ReadScoreFile();
 
 private:
 	shared_ptr<Spaceship> mSpaceship;
@@ -76,6 +76,7 @@ private:
 	bool started = false;
 	bool game_over = false;
 	bool respawn = false;
+	bool name_entered = false;
 
 	// Create a vector to store scores for a session
 	vector<int> session_scores;

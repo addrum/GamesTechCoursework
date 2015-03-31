@@ -90,7 +90,7 @@ void Asteroids::Stop()
 
 void Asteroids::OnKeyPressed(uchar key, int x, int y)
 {
-	if (game_over)
+	if (game_over && !name_entered)
 	{
 		if (mName.size() < 3)
 		{
@@ -138,6 +138,8 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			{
 				mHighScoresLabel[i]->SetVisible(false);
 			}
+			mUserInputLabel->SetVisible(false);
+			mUserInputLimitLabel->SetVisible(false);
 			// Reset score
 			mScoreKeeper.ResetScore();
 			// Reset score label
@@ -156,6 +158,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			started = true;
 			// Set boolean to false so we know the users has restarted
 			game_over = false;
+			name_entered = false;
 			// Create a spaceship and add it to the world
 			mGameWorld->AddObject(CreateSpaceship());
 			// Create some asteroids and add them to the world
@@ -169,13 +172,23 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			respawn = true;
 			SetTimer(0, CREATE_NEW_PLAYER);
 		}
+		break;
 	// Delete last character entered
 	case 8:
 		if (game_over && mName.size() > 0)
 		{
-			mName.pop_back();
+			mName.erase(mName.size() - 1, 1);
 			mUserInputLimitLabel->SetVisible(false);
 		}
+		break;
+	case 13:
+		if (game_over && mName.size() == 3)
+		{
+			// Save the current score to the file
+			SaveScoreToFile(mName, mScoreKeeper.GetScore());
+			name_entered = true;
+		}
+		break;
 	default:
 		break;
 	}
@@ -269,13 +282,11 @@ void Asteroids::OnTimer(int value)
 
 	if (value == SHOW_GAME_OVER)
 	{
-		// Save the current score to the file
-		SaveScoreToFile(mScoreKeeper.GetScore());
-		vector<int> high_scores = ReadScoreFile();
+		vector<string> high_scores = ReadScoreFile();
 		// Add the last score to the current sessions vector
 		//AddSessionScore(mScoreKeeper.GetScore());
 		// Sort it in descending order
-		std::sort(high_scores.begin(), high_scores.end(), std::greater<int>());
+		//std::sort(high_scores.begin(), high_scores.end(), std::greater<int>());
 
 		int limit = 0;
 		// Loop through session scores to display
@@ -547,24 +558,24 @@ void Asteroids::AddSessionScore(int score)
 }
 
 // Save's the parameter to the scores file and append's a new line
-void Asteroids::SaveScoreToFile(int score)
+void Asteroids::SaveScoreToFile(string name, int score)
 {
 	ofstream score_file;
 	score_file.open("scores.txt", ios::out | ios::app);
-	score_file << score << "\n";
+	score_file << name << " " << score << "\n";
 	score_file.close();
 }
 
-vector<int> Asteroids::ReadScoreFile()
+vector<string> Asteroids::ReadScoreFile()
 {
 	string line;
 	ifstream score_file;
 	score_file.open("scores.txt");
-	vector<int> scores;
+	vector<string> scores;
 
-	for (int score = 0; std::getline(score_file, line); score = std::stoi(line))
+	while (std::getline(score_file, line))
 	{
-		scores.push_back(score);
+		scores.push_back(line);
 	}
 	score_file.close();
 	return scores;
