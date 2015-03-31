@@ -92,9 +92,16 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 {
 	if (game_over)
 	{
-		std::ostringstream msg_stream;
-		msg_stream << key;
-		OnInputReceived(msg_stream.str());
+		if (mName.size() < 3)
+		{
+			std::ostringstream msg_stream;
+			msg_stream << key;
+			OnInputReceived(msg_stream.str());
+		}
+		else
+		{
+			mUserInputLimitLabel->SetVisible(true); 
+		}
 	}
 	switch (key)
 	{
@@ -161,6 +168,13 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mRespawnLabel->SetVisible(false);
 			respawn = true;
 			SetTimer(0, CREATE_NEW_PLAYER);
+		}
+	// Delete last character entered
+	case 8:
+		if (game_over && mName.size() > 0)
+		{
+			mName.pop_back();
+			mUserInputLimitLabel->SetVisible(false);
 		}
 	default:
 		break;
@@ -463,6 +477,18 @@ void Asteroids::CreateGUI()
 		= static_pointer_cast<GUIComponent>(mUserInputLabel);
 	mGameDisplay->GetContainer()->AddComponent(user_input_label_component, GLVector2f(0.0f, 0.5f));
 
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mUserInputLimitLabel = shared_ptr<GUILabel>(new GUILabel("Limit of 3 letters"));
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mUserInputLimitLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_LEFT);
+	// Set the vertical alignment of the label to GUI_VALIGN_MIDDLE
+	mUserInputLimitLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_MIDDLE);
+	// Set the visibility of the label to false (hidden)
+	mUserInputLimitLabel->SetVisible(false);
+	// Add the GUILabel to the GUIContainer  
+	shared_ptr<GUIComponent> user_input__limit_label_component
+		= static_pointer_cast<GUIComponent>(mUserInputLimitLabel);
+	mGameDisplay->GetContainer()->AddComponent(user_input__limit_label_component, GLVector2f(0.0f, 0.4f));
 }
 
 void Asteroids::OnScoreChanged(int score)

@@ -64,6 +64,8 @@ private:
 	shared_ptr<GUILabel> mRespawnLabel;
 	// User input label
 	shared_ptr<GUILabel> mUserInputLabel;
+	// User input limit reached
+	shared_ptr<GUILabel> mUserInputLimitLabel;
 	// Vector of score labels
 	vector<shared_ptr<GUILabel>> mHighScoresLabel;
 
