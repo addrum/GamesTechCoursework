@@ -1,11 +1,35 @@
-﻿Build started 29/03/2015 21:11:35.
+﻿Build started 31/03/2015 21:14:52.
      1>Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\Asteroids.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\Asteroids.cpp
          Asteroids.cpp
-     1>d:\dropbox\education\university\year 2\games technology\coursework\in2026 coursework code\src\asteroids.cpp : fatal error C1041: cannot open program database 'd:\dropbox\education\university\year 2\games technology\coursework\in2026 coursework code\vc\asteroids\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
-     1>Done Building Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\Asteroids.vcxproj" (Build target(s)) -- FAILED.
+     1>d:\dropbox\education\university\year 2\games technology\coursework\in2026 coursework code\src\asteroids.cpp(124): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\dropbox\education\university\year 2\games technology\coursework\in2026 coursework code\src\asteroids.cpp(275): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\bin\Asteroids.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../lib /LIBPATH:"../Game Engine/Debug" opengl32.lib glu32.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Debug\Asteroids.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"..\..\bin\Asteroids.lib" /MACHINE:X86 /SAFESEH Debug\Alien.obj
+         Debug\Asteroid.obj
+         Debug\Asteroids.obj
+         Debug\Bullet.obj
+         Debug\Explosion.obj
+         Debug\main.obj
+         Debug\Spaceship.obj
+         "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\lib\Engine.lib"
+     1>Alien.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+         Asteroids.vcxproj -> D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\..\..\bin\Asteroids.exe
+       PostBuildEvent:
+         copy ..\..\assets\*.* ..\..\bin
+         :VCEnd
+         ..\..\assets\alien_fs.png
+         ..\..\assets\asteroid.shape
+         ..\..\assets\asteroid1_fs.png
+         ..\..\assets\bullet.shape
+         ..\..\assets\explosion_fs.png
+         ..\..\assets\spaceship.shape
+         ..\..\assets\spaceship_fs.png
+         ..\..\assets\thruster.shape
+                 8 file(s) copied.
+     1>Done Building Project "D:\Dropbox\Education\University\Year 2\Games Technology\Coursework\IN2026 Coursework Code\VC\Asteroids\Asteroids.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.08
+Time Elapsed 00:00:00.95
