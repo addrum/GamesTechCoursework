@@ -246,6 +246,10 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAsteroidCount--;
+		if (mAsteroidCount <= 0 && mAlienCount <= 0)
+		{
+			SetTimer(500, START_NEXT_LEVEL);
+		}
 	}
 	if (object->GetType() == GameObjectType("Alien"))
 	{
@@ -254,10 +258,10 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAlienCount--;
-	}
-	if (mAsteroidCount <= 0 && mAlienCount <= 0)
-	{
-		SetTimer(500, START_NEXT_LEVEL);
+		if (mAsteroidCount <= 0 && mAlienCount <= 0)
+		{
+			SetTimer(500, START_NEXT_LEVEL);
+		}
 	}
 }
 
