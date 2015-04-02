@@ -98,7 +98,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			msg_stream << key;
 			OnInputReceived(msg_stream.str());
 		}
-		else
+		else if (key != 13 || key != 8)
 		{
 			mUserInputLimitLabel->SetVisible(true); 
 		}
@@ -290,6 +290,7 @@ void Asteroids::OnTimer(int value)
 	if (value == SHOW_GAME_OVER)
 	{
 		vector<string> high_scores = ReadScoreFile();
+		std::sort(high_scores.begin(), high_scores.end(), std::greater<string>());
 		// Add the last score to the current sessions vector
 		//AddSessionScore(mScoreKeeper.GetScore());
 		// Sort it in descending order
@@ -569,7 +570,7 @@ void Asteroids::SaveScoreToFile(string name, int score)
 {
 	ofstream score_file;
 	score_file.open("scores.txt", ios::out | ios::app);
-	score_file << name << " " << score << "\n";
+	score_file << score << " " << name << "\n";
 	score_file.close();
 }
 
