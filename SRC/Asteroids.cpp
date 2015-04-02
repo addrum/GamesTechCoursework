@@ -154,6 +154,9 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mAsteroidCount = 0;
 			// Reset aliens
 			mAlienCount = 0;
+			// Reset name
+			mName = "";
+			mUserInputLabel->SetText("Name: ");
 			// Set boolean to started so we know the user has ok'd the start
 			started = true;
 			// Set boolean to false so we know the users has restarted
