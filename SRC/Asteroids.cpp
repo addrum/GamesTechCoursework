@@ -2,6 +2,8 @@
 #include <functional>
 #include <iostream>
 #include <fstream>
+#include <locale>
+#include <sstream>
 
 #include "Asteroid.h"
 #include "Asteroids.h"
@@ -290,7 +292,6 @@ void Asteroids::OnTimer(int value)
 	if (value == SHOW_GAME_OVER)
 	{
 		vector<string> high_scores = ReadScoreFile();
-		std::sort(high_scores.begin(), high_scores.end(), std::greater<string>());
 		// Add the last score to the current sessions vector
 		//AddSessionScore(mScoreKeeper.GetScore());
 		// Sort it in descending order
@@ -574,6 +575,34 @@ void Asteroids::SaveScoreToFile(string name, int score)
 	score_file.close();
 }
 
+bool is_not_digit(char c)
+{
+	return !isdigit(c);
+}
+
+bool numeric_string_compare(const std::string& s1, const std::string& s2)
+{
+	// handle empty strings...
+
+	std::string::const_iterator it1 = s1.begin(), it2 = s2.begin();
+
+	if (isdigit(s1[0]) && isdigit(s2[0])) {
+		int n1, n2;
+		std::stringstream ss(s1);
+		ss >> n1;
+		ss.clear();
+		ss.str(s2);
+		ss >> n2;
+
+		if (n1 != n2) return n1 > n2;
+
+		it1 = std::find_if(s1.begin(), s1.end(), is_not_digit);
+		it2 = std::find_if(s2.begin(), s2.end(), is_not_digit);
+	}
+
+	return std::lexicographical_compare(it1, s1.end(), it2, s2.end());
+}
+
 vector<string> Asteroids::ReadScoreFile()
 {
 	string line;
@@ -586,6 +615,7 @@ vector<string> Asteroids::ReadScoreFile()
 		scores.push_back(line);
 	}
 	score_file.close();
+	std::sort(scores.begin(), scores.end(), numeric_string_compare);
 	return scores;
 }
 
@@ -600,7 +630,3 @@ shared_ptr<GameObject> Asteroids::CreateExplosion()
 	explosion->Reset();
 	return explosion;
 }
-
-
-
-
