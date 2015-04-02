@@ -24,6 +24,10 @@ public:
  			mScore += 10;
 			FireScoreChanged();
 		}
+		else if (object->GetType() == GameObjectType("Alien")) {
+			mScore += 20;
+			FireScoreChanged();
+		}
 	}
 
 	void AddListener(shared_ptr<IScoreListener> listener)
