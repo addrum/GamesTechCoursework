@@ -163,7 +163,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			game_over = false;
 			name_entered = false;
 			// Create a spaceship and add it to the world
-			mGameWorld->AddObject(CreateSpaceship());
+			SetTimer(0, CREATE_NEW_PLAYER);
 			// Create some asteroids and add them to the world
 			CreateAsteroids(10);
 			// Create some aliens and add them to the world
