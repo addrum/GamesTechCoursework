@@ -324,7 +324,7 @@ void Asteroids::OnTimer(int value)
 			// Add the GUILabel to the GUIContainer  
 			shared_ptr<GUIComponent> top_score_component
 				= static_pointer_cast<GUIComponent>(mTopScoreLabel);
-			mGameDisplay->GetContainer()->AddComponent(top_score_component, GLVector2f(0.475f, 0.8f - (limit * 0.05f)));
+			mGameDisplay->GetContainer()->AddComponent(top_score_component, GLVector2f(0.4f, 0.8f - (limit * 0.05f)));
 			
 			limit++;
 		}
