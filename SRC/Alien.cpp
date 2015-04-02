@@ -26,7 +26,7 @@ bool Alien::CollisionTest(shared_ptr<GameObject> o)
 	{
 		GLVector3f bullet_direction(cos(DEG2RAD * o->GetAngle()), sin(DEG2RAD* o->GetAngle()), 0);
 		bullet_direction.normalize();
-		SetPosition(mPosition + (bullet_direction / 4));
+		SetPosition(mPosition + (bullet_direction / 10));
 	}
 	else
 	{
