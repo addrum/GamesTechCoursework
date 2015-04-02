@@ -22,7 +22,7 @@ Alien::~Alien(void)
 bool Alien::CollisionTest(shared_ptr<GameObject> o)
 {
 	if (o->GetType() == GameObjectType("Alien") || o->GetType() == GameObjectType("Asteroid") || o->GetType() == GameObjectType("Spaceship")) return false;
-	if (o->GetType() == GameObjectType("Bullet"))
+	if (o->GetType() == GameObjectType("Bullet") || o->GetType() == GameObjectType("Spaceship"))
 	{
 		GLVector3f bullet_direction(cos(DEG2RAD * o->GetAngle()), sin(DEG2RAD* o->GetAngle()), 0);
 		bullet_direction.normalize();
