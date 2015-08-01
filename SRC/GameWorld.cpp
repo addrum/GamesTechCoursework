@@ -71,6 +71,12 @@ void GameWorld::AddObject(shared_ptr<GameObject> ptr)
 	FireObjectAdded(ptr);
 }
 
+/** Returns list of game objects */
+GameObjectList GameWorld::GetObjects()
+{
+	return mGameObjects;
+}
+
 /** Remove a game object from the world. */
 void GameWorld::RemoveObject(GameObject* ptr)
 {

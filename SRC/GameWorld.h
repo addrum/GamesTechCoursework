@@ -32,6 +32,7 @@ public:
 
 	GameObjectList GetCollisions( shared_ptr<GameObject> ptr );
 	GameObjectList GetCollisions( GameObject* optr );
+	GameObjectList GetObjects();
 
 	void AddListener( IGameWorldListener* lptr) { mListeners.push_back(lptr); }
 	void RemoveListener( IGameWorldListener* lptr) { mListeners.remove(lptr); }

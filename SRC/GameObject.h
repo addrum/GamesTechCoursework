@@ -26,6 +26,7 @@ public:
 	
 	virtual bool CollisionTest(shared_ptr<GameObject> o) { return false; }
 	virtual void OnCollision(const GameObjectList& objects) {}
+	void RemoveFromWorld(const shared_ptr<GameObject> o);
 
 	const GameObjectType& GetType() const { return mType; }
 

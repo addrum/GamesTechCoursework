@@ -104,3 +104,8 @@ void GameObject::PostRender(void)
 	// Restore projection matrix from stack
 	glPopMatrix();
 }
+
+void GameObject::RemoveFromWorld(shared_ptr<GameObject> o)
+{
+	mWorld->FlagForRemoval(o->GetThisPtr());
+}

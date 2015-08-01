@@ -94,13 +94,17 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 {
 	if (game_over && !name_entered)
 	{
-		if (mName.size() < 3)
+		if (mName.size() == 3)
+		{
+			name_entered = true;
+		}
+		if (mName.size() < 3 && key != '\r')
 		{
 			std::ostringstream msg_stream;
 			msg_stream << key;
 			OnInputReceived(msg_stream.str());
 		}
-		else if (key != 13 || key != 8)
+		else if (key != '\r')
 		{
 			mUserInputLimitLabel->SetVisible(true); 
 		}
@@ -128,7 +132,11 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 		}
 		break;
 	case 'r':
-		if (game_over) {
+		if (game_over && name_entered) {
+			// Save the current score to the file
+			SaveScoreToFile(mName, mScoreKeeper.GetScore());
+			// Remove asteroids left over
+			RemoveAsteroids();
 			// Hide game over label
 			mGameOverLabel->SetVisible(false);
 			// Hide final score label
@@ -171,7 +179,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			// Create some aliens and add them to the world
 			CreateAliens(1);
 		}
-		else
+		else if (!game_over)
 		{
 			mRespawnLabel->SetVisible(false);
 			respawn = true;
@@ -184,14 +192,6 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 		{
 			mName.erase(mName.size() - 1, 1);
 			mUserInputLimitLabel->SetVisible(false);
-		}
-		break;
-	case 13:
-		if (game_over && mName.size() == 3)
-		{
-			// Save the current score to the file
-			SaveScoreToFile(mName, mScoreKeeper.GetScore());
-			name_entered = true;
 		}
 		break;
 	default:
@@ -277,11 +277,17 @@ void Asteroids::OnTimer(int value)
 	if (value == CREATE_NEW_PLAYER)
 	{
 		mSpaceship->Reset();
+		
 		mGameWorld->AddObject(mSpaceship);
 	}
 
 	if (value == START_NEXT_LEVEL)
 	{
+		if (mSpaceship == NULL)
+		{
+			mSpaceship->Reset();
+			mGameWorld->AddObject(mSpaceship);
+		}
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
 		int num_aliens = 1 + mLevel;
@@ -373,6 +379,15 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
+	}
+}
+
+void Asteroids::RemoveAsteroids()
+{
+	GameObjectList mGameObjects = mGameWorld->GetObjects();
+	for each (shared_ptr<GameObject> object in mGameObjects)
+	{
+		object->RemoveFromWorld(object);
 	}
 }
 

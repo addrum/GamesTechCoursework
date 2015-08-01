@@ -2,3 +2,14 @@
 0 ATS
 0 CBR
 50 ATS
+0 ADR
+0 r r
+0 ADS
+60 A
+10 rrr
+0 rrr
+0 AD
+120 rrr
+20 rrr
+100 rrr
+120 rrr
