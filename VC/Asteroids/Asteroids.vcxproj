@@ -103,6 +103,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\SRC\Alien.cpp" />
+    <ClCompile Include="..\..\SRC\Alien2.cpp" />
     <ClCompile Include="..\..\SRC\Asteroid.cpp" />
     <ClCompile Include="..\..\src\Asteroids.cpp" />
     <ClCompile Include="..\..\src\Bullet.cpp" />
@@ -112,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\SRC\Alien.h" />
+    <ClInclude Include="..\..\SRC\Alien2.h" />
     <ClInclude Include="..\..\SRC\Asteroid.h" />
     <ClInclude Include="..\..\src\Asteroids.h" />
     <ClInclude Include="..\..\src\Bullet.h" />

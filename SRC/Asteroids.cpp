@@ -19,6 +19,7 @@
 #include "GUILabel.h"
 #include "Explosion.h"
 #include "Alien.h"
+#include "Alien2.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -256,7 +257,7 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 			SetTimer(500, START_NEXT_LEVEL);
 		}
 	}
-	if (object->GetType() == GameObjectType("Alien"))
+	if (object->GetType() == GameObjectType("Alien2"))
 	{
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
@@ -400,7 +401,7 @@ void Asteroids::CreateAliens(const uint num_aliens)
 		shared_ptr<Sprite> alien_sprite
 			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
 		alien_sprite->SetLoopAnimation(true);
-		shared_ptr<GameObject> alien = make_shared<Alien>();
+		shared_ptr<GameObject> alien = make_shared<Alien2>();
 		alien->SetBoundingShape(make_shared<BoundingSphere>(alien->GetThisPtr(), 10.0f));
 		alien->SetSprite(alien_sprite);
 		alien->SetScale(0.2f);
