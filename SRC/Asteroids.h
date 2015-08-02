@@ -51,6 +51,8 @@ public:
 
 	void SaveScoreToFile(string name, int score);
 
+	void DeleteLastChar();
+
 	vector<string> ReadScoreFile();
 
 private:
@@ -74,8 +76,8 @@ private:
 	uint mAlienCount;
 
 	bool started = false;
-	bool game_over = false;
 	bool respawn = false;
+	bool game_over = false;
 	bool name_entered = false;
 
 	// Create a vector to store scores for a session

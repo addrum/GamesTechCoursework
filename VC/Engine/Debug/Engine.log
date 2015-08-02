@@ -1,13 +1,8 @@
-﻿Build started 8/1/2015 1:20:38 PM.
+﻿Build started 8/2/2015 1:11:29 PM.
      1>Project "C:\Users\adams_000\Documents\Visual Studio 2013\Projects\GamesTechCoursework\VC\Engine\Engine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\GameObject.cpp ..\..\src\GameWorld.cpp ..\..\src\MovementController.cpp
-         GameObject.cpp
-         Generating Code...
-         Compiling...
-         MovementController.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\GameWorld.cpp
          GameWorld.cpp
-         Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\adams_000\Documents\Visual Studio 2013\Projects\GamesTechCoursework\VC\Asteroids\Debug\..\..\..\lib\\..\lib\Engine.lib" FreeImage.lib /LIBPATH:../../lib /NOLOGO Debug\Animation.obj
          Debug\AnimationManager.obj
@@ -36,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.99
+Time Elapsed 00:00:00.90

@@ -14,3 +14,9 @@
 100 rrr
 120 rrr
 160 ADS
+280 ATS
+80 Add
+10    
+10 
+20 ARS
+10 ASD

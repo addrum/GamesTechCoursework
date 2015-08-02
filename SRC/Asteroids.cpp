@@ -14,11 +14,9 @@
 #include "GameWorld.h"
 #include "GameDisplay.h"
 #include "Spaceship.h"
-#include "BoundingShape.h"
 #include "BoundingSphere.h"
 #include "GUILabel.h"
 #include "Explosion.h"
-#include "Alien.h"
 #include "Alien2.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
@@ -98,16 +96,17 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 		if (mName.size() == 3)
 		{
 			name_entered = true;
+			mUserInputLimitLabel->SetVisible(true); 
 		}
-		if (mName.size() < 3 && key != '\r')
+		if (mName.size() == 2)
+		{
+			mRestartLabel->SetVisible(true);
+		}
+		if (mName.size() < 3 && key != '\r' && (key != 8 || key != '\b') && key != ' ')
 		{
 			std::ostringstream msg_stream;
 			msg_stream << key;
 			OnInputReceived(msg_stream.str());
-		}
-		else if (key != '\r')
-		{
-			mUserInputLimitLabel->SetVisible(true); 
 		}
 	}
 	switch (key)
@@ -128,7 +127,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			CreateAsteroids(10);
 			// Create some aliens and add them to the world
 			CreateAliens(1);
-		} else {
+		} else if (!respawn) {
 			mSpaceship->Shoot();
 		}
 		break;
@@ -167,9 +166,7 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mAlienCount = 0;
 			// Reset name
 			mName = "";
-			mUserInputLabel->SetText("Name: ");
-			// Set boolean to started so we know the user has ok'd the start
-			started = true;
+			mUserInputLabel->SetText("Name: ");;
 			// Set boolean to false so we know the users has restarted
 			game_over = false;
 			name_entered = false;
@@ -180,25 +177,37 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			// Create some aliens and add them to the world
 			CreateAliens(1);
 		}
-		else if (!game_over)
+		else if (!game_over && respawn)
 		{
 			mRespawnLabel->SetVisible(false);
-			respawn = true;
 			SetTimer(0, CREATE_NEW_PLAYER);
+			respawn = false;
 		}
 		break;
 	// Delete last character entered
 	case 8:
-		if (game_over && mName.size() > 0)
-		{
-			mName.erase(mName.size() - 1, 1);
-			mUserInputLimitLabel->SetVisible(false);
-		}
+		DeleteLastChar();
+		break;
+	case 127:
+		DeleteLastChar();
 		break;
 	default:
 		break;
 	}
 }
+
+void Asteroids::DeleteLastChar()
+{
+	if (game_over && mName.size() > 0)
+	{
+		mName.erase(mName.size() - 1, 1);
+		mUserInputLabel->SetText("Name: " + mName);
+		name_entered = false;
+		mUserInputLimitLabel->SetVisible(false);
+		mRestartLabel->SetVisible(false);
+	}
+}
+
 
 void Asteroids::OnKeyReleased(uchar key, int x, int y) {}
 
@@ -337,7 +346,6 @@ void Asteroids::OnTimer(int value)
 		}
 		mGameOverLabel->SetVisible(true);
 		mFinalScoreLabel->SetVisible(true);
-		mRestartLabel->SetVisible(true);
 		mUserInputLabel->SetVisible(true);
 		started = false;
 		game_over = true;
@@ -404,7 +412,7 @@ void Asteroids::CreateAliens(const uint num_aliens)
 		shared_ptr<GameObject> alien = make_shared<Alien2>();
 		alien->SetBoundingShape(make_shared<BoundingSphere>(alien->GetThisPtr(), 10.0f));
 		alien->SetSprite(alien_sprite);
-		alien->SetScale(0.2f);
+		alien->SetScale(0.1f);
 		mGameWorld->AddObject(alien);
 	}
 }
@@ -565,10 +573,7 @@ void Asteroids::OnPlayerKilled(int lives_left)
 	if (lives_left > 0) 
 	{ 
 		mRespawnLabel->SetVisible(true);
-		if (respawn)
-		{
-			respawn = false;
-		}
+		respawn = true;
 	}
 	else
 	{
